@@ -8,16 +8,18 @@ class AddBook extends Component {
   state = {
     query: ''
   }
+  // Initial load
+  componentDidMount() {
+    this.props.search(this.state.query)
+  }
 
   //Update the search based on search input value/query
   handleChange = (query) => {
-    this.setState(() => ({ query }));
-    console.log(this.state.query);
-    this.props.search(query);
+    this.setState({ query }, () => ( this.props.search(this.state.query)));
   }
 
   //TODO: Implement debounce
-  
+
   delayQuery(fn, delay) {
     let lastCalled;
     return function () {
@@ -32,9 +34,7 @@ class AddBook extends Component {
   }
 
   render() {
-    // console.log(this.state);
     const { searchResult, updateBook } = this.props;
-    console.log('searchResult', searchResult);
     return (
       <div className="search-books">
         <div className="search-books-bar">
